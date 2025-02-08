@@ -77,6 +77,7 @@ class _HomePageState extends State<HomePage> {
         "Tournament",
         style: TextStyle(
           color: Colors.white,
+          backgroundColor: Colors.transparent,
           fontSize: 21,
           fontWeight: FontWeight.bold,
         ),
