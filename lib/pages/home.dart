@@ -1,32 +1,82 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(),
-      backgroundColor: Color(0xFF212121),
+      appBar: _buildAppBar(),
+      backgroundColor: const Color(0xFF212121),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        items: [
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              'assets/icons/home_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.svg',
+              height: 29,
+              width: 29,
+              color: _selectedIndex == 0 ? Colors.yellow : Colors.white,
+            ),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              'assets/icons/group_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.svg',
+              height: 29,
+              width: 29,
+              color: _selectedIndex == 1 ? Colors.yellow : Colors.white,
+            ),
+            label: 'Teams',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              'assets/icons/person_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.svg',
+              height: 29,
+              width: 29,
+              color: _selectedIndex == 2 ? Colors.yellow : Colors.white,
+            ),
+            label: 'Players',
+          ),
+        ],
+        backgroundColor: const Color(0xFF212121),
+        selectedItemColor: Colors.yellow,
+        unselectedItemColor: Colors.white,
+        type: BottomNavigationBarType.fixed,
+      ),
     );
   }
 
-  AppBar appBar() {
+  AppBar _buildAppBar() {
     return AppBar(
-      title: Text(
+      title: const Text(
         "Tournament",
         style: TextStyle(
-          color: Colors.yellow,
+          color: Colors.white,
           fontSize: 21,
-          fontWeight: FontWeight.bold
-        )
+          fontWeight: FontWeight.bold,
+        ),
       ),
       leading: Container(
-        margin: EdgeInsets.all(10),
+        margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: Color(0xFF212121),
-          borderRadius: BorderRadius.circular(12)
+          color: const Color(0xFF212121),
+          borderRadius: BorderRadius.circular(12),
         ),
         alignment: Alignment.center,
         child: SvgPicture.asset(
@@ -35,8 +85,8 @@ class HomePage extends StatelessWidget {
           width: 29,
         ),
       ),
-        centerTitle:  true,
-        backgroundColor: Color(0xFF212121),
+      centerTitle: true,
+      backgroundColor: const Color(0xFF212121),
     );
   }
 }
