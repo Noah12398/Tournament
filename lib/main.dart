@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:postgres/postgres.dart';
 import 'package:tournament/pages/home.dart';
 import 'package:tournament/pages/player.dart';
 
@@ -20,7 +22,8 @@ class _MyAppState extends State<MyApp> {
   // Screens for navigation
   final List<Widget> _screens = [
     const HomePage(),
-    const Center(child: Text('Teams Content', style: TextStyle(color: Colors.white))),
+    const Center(
+        child: Text('Teams Content', style: TextStyle(color: Colors.white))),
     const PlayerScreen(),
   ];
 
@@ -28,6 +31,12 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // operation();
   }
 
   @override
