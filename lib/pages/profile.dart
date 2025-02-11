@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class UserProfileScreen extends StatefulWidget {
   final String playerName;
-  final double rating;
+  final int rating;
 
   const UserProfileScreen({super.key, required this.playerName, required this.rating});
 
@@ -11,12 +11,12 @@ class UserProfileScreen extends StatefulWidget {
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
-  late double rating;
+  late int rating;
 
   @override
   void initState() {
     super.initState();
-    rating = widget.rating;
+    rating = widget.rating ;
   }
 
   @override
@@ -78,14 +78,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 const Text("Rating", style: TextStyle(fontSize: 16, color: Colors.grey)),
                 Expanded(
                   child: Slider(
-                    value: rating,
+                    value: rating as double,
                     min: 0,
                     max: 10,
                     activeColor: Colors.amber,
                     inactiveColor: Colors.grey,
                     onChanged: (value) {
                       setState(() {
-                        rating = value;
+                        rating = value as int;
                       });
                     },
                   ),

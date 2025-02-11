@@ -1,6 +1,6 @@
 import os
 import logging
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 import psycopg2
 from dotenv import load_dotenv
@@ -38,17 +38,40 @@ def get_players():
     try:
         connection = get_db_connection()
         cursor = connection.cursor()
-        cursor.execute('SELECT name, level FROM players;')
+        cursor.execute('SELECT name, rating FROM players;')
         players_from_db = cursor.fetchall()
         cursor.close()
         connection.close()
 
         # Prepare the players data from the DB query
-        players = [{"name": player[0], "level": player[1]} for player in players_from_db]
+        players = [{"name": player[0], "rating": player[1]} for player in players_from_db]
         logging.info(f"Fetched {len(players)} players from the database")
         return jsonify({"players": players})
     except Exception as e:
         logging.error(f"Error fetching players: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/players/add', methods=['POST'])
+def add_players():
+    try:
+        data = request.get_json()
+        player_name = data['name']
+        player_rating = data['rating']
+        
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        cursor.execute('INSERT INTO players (name, rating) VALUES (%s, %s)', (player_name, player_rating))
+        connection.commit()
+        cursor.close()
+        connection.close()
+
+        # Define the new_player dictionary correctly
+        new_player = {"name": player_name, "rating": player_rating}
+        
+        return jsonify({'message': 'Player added successfully', 'player': new_player})  # ✅ No comma at the end
+
+    except Exception as e:
+        logging.error(f"Error adding players: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
