@@ -4,26 +4,29 @@ class UserProfileScreen extends StatefulWidget {
   final String playerName;
   final int rating;
 
-  const UserProfileScreen({super.key, required this.playerName, required this.rating});
+  const UserProfileScreen(
+      {super.key, required this.playerName, required this.rating});
 
   @override
   _UserProfileScreenState createState() => _UserProfileScreenState();
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
-  late int rating;
+  late double rating;
 
-  @override
-  void initState() {
-    super.initState();
-    rating = widget.rating ;
-  }
+ @override
+void initState() {
+  super.initState();
+  rating = widget.rating.toDouble(); // ✅ Convert int to double
+}
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.playerName, style: const TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(widget.playerName,
+            style: const TextStyle(fontWeight: FontWeight.bold)),
         centerTitle: true,
         actions: [
           IconButton(
@@ -50,12 +53,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   ),
                   const SizedBox(height: 10),
                   Image.asset('assets/Tshirt.png', width: 100),
-
                 ],
               ),
             ),
             const SizedBox(height: 20),
-            const Text("First name", style: TextStyle(fontSize: 16, color: Colors.grey)),
+            const Text("First name",
+                style: TextStyle(fontSize: 16, color: Colors.grey)),
             TextField(
               decoration: InputDecoration(
                 hintText: widget.playerName.split(" ")[0],
@@ -64,10 +67,13 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               ),
             ),
             const SizedBox(height: 10),
-            const Text("Last name", style: TextStyle(fontSize: 16, color: Colors.grey)),
+            const Text("Last name",
+                style: TextStyle(fontSize: 16, color: Colors.grey)),
             TextField(
               decoration: InputDecoration(
-                hintText: widget.playerName.split(" ").length > 1 ? widget.playerName.split(" ")[1] : "",
+                hintText: widget.playerName.split(" ").length > 1
+                    ? widget.playerName.split(" ")[1]
+                    : "",
                 suffixText: "4/40",
                 border: InputBorder.none,
               ),
@@ -75,17 +81,18 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             const SizedBox(height: 20),
             Row(
               children: [
-                const Text("Rating", style: TextStyle(fontSize: 16, color: Colors.grey)),
+                const Text("Rating",
+                    style: TextStyle(fontSize: 16, color: Colors.grey)),
                 Expanded(
                   child: Slider(
-                    value: rating as double,
+                    value: rating, // Ensure this is a double
                     min: 0,
                     max: 10,
                     activeColor: Colors.amber,
                     inactiveColor: Colors.grey,
                     onChanged: (value) {
                       setState(() {
-                        rating = value as int;
+                        rating = value; // Keep it as double
                       });
                     },
                   ),
@@ -94,7 +101,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   backgroundColor: Colors.amber,
                   radius: 18,
                   child: Text(rating.toInt().toString(),
-                      style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+                      style: const TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold)),
                 ),
               ],
             ),

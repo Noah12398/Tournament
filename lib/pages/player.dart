@@ -26,7 +26,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
   // Method to send a request to the Python backend
   Future<void> _fetchPlayersData() async {
     try {
-      print("456");
+      // print("456");
       final url = Uri.parse('http://127.0.0.1:5000/players'); // Backend URL
       final response = await http.get(
         url,
@@ -184,7 +184,15 @@ class _PlayerScreenState extends State<PlayerScreen> {
                     trailing: Icon(Icons.arrow_forward, color: Colors.white),
                     onTap: () {
                       // Navigate to player profile
-                      UserProfileScreen(playerName: player.name, rating: player.rating);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UserProfileScreen(
+                            playerName: player.name,
+                            rating: player.rating,
+                          ),
+                        ),
+                      );
                     },
                   ),
                 );
