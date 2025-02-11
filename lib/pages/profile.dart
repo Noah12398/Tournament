@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 
 class UserProfileScreen extends StatefulWidget {
   final String playerName;
-  final double level;
+  final double rating;
 
-  const UserProfileScreen({super.key, required this.playerName, required this.level});
+  const UserProfileScreen({super.key, required this.playerName, required this.rating});
 
   @override
   _UserProfileScreenState createState() => _UserProfileScreenState();
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
-  late double level;
+  late double rating;
 
   @override
   void initState() {
     super.initState();
-    level = widget.level;
+    rating = widget.rating;
   }
 
   @override
@@ -75,17 +75,17 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             const SizedBox(height: 20),
             Row(
               children: [
-                const Text("Level", style: TextStyle(fontSize: 16, color: Colors.grey)),
+                const Text("Rating", style: TextStyle(fontSize: 16, color: Colors.grey)),
                 Expanded(
                   child: Slider(
-                    value: level,
+                    value: rating,
                     min: 0,
-                    max: 100,
+                    max: 10,
                     activeColor: Colors.amber,
                     inactiveColor: Colors.grey,
                     onChanged: (value) {
                       setState(() {
-                        level = value;
+                        rating = value;
                       });
                     },
                   ),
@@ -93,7 +93,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 CircleAvatar(
                   backgroundColor: Colors.amber,
                   radius: 18,
-                  child: Text(level.toInt().toString(),
+                  child: Text(rating.toInt().toString(),
                       style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
                 ),
               ],

@@ -85,7 +85,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                   MaterialPageRoute(
                     builder: (context) => UserProfileScreen(
                       playerName: player.name,
-                      level: 5,
+                      rating: 5,
                     ),
                   ),
                 );
