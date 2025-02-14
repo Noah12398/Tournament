@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:postgres/postgres.dart';
 import 'package:tournament/pages/home.dart';
 import 'package:tournament/pages/player.dart';
 

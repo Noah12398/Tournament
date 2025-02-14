@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:tournament/pages/profile.dart';
 
 class PlayerScreen extends StatefulWidget {
-  const PlayerScreen({Key? key}) : super(key: key);
+  const PlayerScreen({super.key});
 
   @override
   _PlayerScreenState createState() => _PlayerScreenState();

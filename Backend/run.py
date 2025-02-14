@@ -74,5 +74,44 @@ def add_players():
         logging.error(f"Error adding players: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
+@app.route('/tournaments', methods=['GET'])
+def get_tournaments():
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        cursor.execute('SELECT * FROM tournaments;')
+        tournaments_from_db = cursor.fetchall()
+        cursor.close()  
+        connection.close()
+
+        # Prepare the players data from the DB query
+        tournaments = [{"name": tournament[0]} for tournament in tournaments_from_db]
+        logging.info(f"Fetched {len(tournaments)} players from the database")
+        return jsonify({"players": tournaments})
+    except Exception as e:
+        logging.error(f"Error fetching players: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/tournaments/add', methods=['POST'])
+def add_tournaments():
+    try:
+        data = request.get_json()
+        tournament_name = data['name']
+        
+        connection = get_db_connection()
+        cursor = connection.cursor()
+        cursor.execute('INSERT INTO tournaments (name) VALUES (%s)', (tournament_name))
+        connection.commit()
+        cursor.close()
+        connection.close()
+
+        new_tournament = {"name": tournament_name}
+        
+        return jsonify({'message': 'Tournament added successfully', 'player': new_tournament})
+
+    except Exception as e:
+        logging.error(f"Error adding tournament: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+    
 if __name__ == '__main__':
     app.run(debug=True)
