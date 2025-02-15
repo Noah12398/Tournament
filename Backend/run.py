@@ -79,15 +79,15 @@ def get_tournaments():
     try:
         connection = get_db_connection()
         cursor = connection.cursor()
-        cursor.execute('SELECT * FROM tournaments;')
+        cursor.execute('SELECT * FROM tournaments')
         tournaments_from_db = cursor.fetchall()
         cursor.close()  
         connection.close()
 
         # Prepare the players data from the DB query
         tournaments = [{"name": tournament[0]} for tournament in tournaments_from_db]
-        logging.info(f"Fetched {len(tournaments)} players from the database")
-        return jsonify({"players": tournaments})
+        logging.info(f"Fetched {len(tournaments)} tournaments from the database")
+        return jsonify({"tournaments": tournaments})
     except Exception as e:
         logging.error(f"Error fetching players: {str(e)}")
         return jsonify({"error": str(e)}), 500
@@ -100,7 +100,7 @@ def add_tournaments():
         
         connection = get_db_connection()
         cursor = connection.cursor()
-        cursor.execute('INSERT INTO tournaments (name) VALUES (%s)', (tournament_name))
+        cursor.execute('INSERT INTO tournaments (name) VALUES (%s)', (tournament_name,))
         connection.commit()
         cursor.close()
         connection.close()
