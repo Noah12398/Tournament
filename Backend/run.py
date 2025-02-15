@@ -72,7 +72,7 @@ def add_players():
         # Define the new_player dictionary correctly
         new_player = {"name": player_name, "rating": player_rating}
         
-        return jsonify({'message': 'Player added successfully', 'player': new_player})  # ✅ No comma at the end
+        return jsonify({'message': 'Player added successfully', 'player': new_player})
 
     except Exception as e:
         logging.error(f"Error adding players: {str(e)}")
@@ -83,13 +83,13 @@ def get_tournaments():
     try:
         connection = connection_pool.getconn()
         cursor = connection.cursor()
-        cursor.execute('SELECT * FROM tournaments')
+        cursor.execute('SELECT * FROM tournaments') #select necessary columns
         tournaments_from_db = cursor.fetchall()
         cursor.close()  
         connection_pool.putconn(connection)
 
         # Prepare the tournaments data from the DB query
-        tournaments = [{"name": tournament[0]} for tournament in tournaments_from_db]
+        tournaments = [{"name": tournament[0]} for tournament in tournaments_from_db] #fetching columns
         logging.info(f"Fetched {len(tournaments)} tournaments from the database")
         return jsonify({"tournaments": tournaments})
     except Exception as e:
@@ -104,12 +104,12 @@ def add_tournaments():
         
         connection = connection_pool.getconn()
         cursor = connection.cursor()
-        cursor.execute('INSERT INTO tournaments (name) VALUES (%s)', (tournament_name,))
+        cursor.execute('INSERT INTO tournaments (name) VALUES (%s)', (tournament_name,)) #add values of tourn
         connection.commit()
         cursor.close()
         connection_pool.putconn(connection)
 
-        new_tournament = {"name": tournament_name}
+        new_tournament = {"name": tournament_name} #json format style thingy
         
         return jsonify({'message': 'Tournament added successfully', 'tournament': new_tournament})
 

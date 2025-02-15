@@ -149,6 +149,6 @@ class Tournament {
   Tournament({required this.name});
 
   factory Tournament.fromJson(Map<String, dynamic> json) {
-    return Tournament(name: json['name']);
+    return Tournament(name: json['name']); //values of table here
   }
 }
